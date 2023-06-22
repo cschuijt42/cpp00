@@ -12,8 +12,17 @@
 
 
 NAME 			    := megaphone
-CC				    := gcc
-COMPIL_FLAGS		?= -Wall -Wextra -Werror -std=c++17 -lstdc++
+UNAME_S				:= $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+	CC				:= c++
+else
+	CC				:= gcc
+endif
+ifeq ($(UNAME_S), Darwin)
+	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++17
+else
+	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++17 -lstdc++
+endif
 INCLUDE_FLAGS		?= 
 
 SOURCEFILES	:=	megaphone.cpp
