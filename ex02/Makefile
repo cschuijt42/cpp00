@@ -25,8 +25,9 @@ else
 endif
 INCLUDE_FLAGS		?= 
 
-SOURCEFILES	:=	Account.cpp \
-				tests.cpp
+SOURCEFILES	:=	tests.cpp \
+				Account.cpp
+				
 
 HEADER	:=	Account.hpp
 
