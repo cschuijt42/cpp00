@@ -19,9 +19,9 @@ else
 	CC				:= gcc
 endif
 ifeq ($(UNAME_S), Darwin)
-	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++17
+	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++98
 else
-	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++17 -lstdc++
+	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++98 -lstdc++
 endif
 INCLUDE_FLAGS		?= 
 
