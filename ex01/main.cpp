@@ -56,15 +56,13 @@ void	search_contacts(PhoneBook *phone_book)
 int	main()
 {
 	PhoneBook	phone_book;
-
-	phone_book.add("Hallooooooooooo", "hoi", "doei", "123", "xd");
-	phone_book.add("doei", "dag", "xdxdxdxdxd", "123", "xdxdxdxdxd");
-
 	string	command;
 	while (true)
 	{
 		cout << "Please enter a command (ADD, SEARCH or EXIT):" << endl;
 		getline(cin, command);
+		if (cin.eof())
+			return 0;
 		if (command == "EXIT")
 			break;
 		else if (command == "ADD")
