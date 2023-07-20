@@ -26,6 +26,7 @@ endif
 INCLUDE_FLAGS		?= 
 
 SOURCEFILES	:=	main.cpp \
+				Contact.cpp \
 				PhoneBook.cpp
 
 HEADER	:=	PhoneBook.hpp \

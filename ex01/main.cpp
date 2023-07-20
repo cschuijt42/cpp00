@@ -1,77 +1,78 @@
 #include <iostream>
 #include "PhoneBook.hpp"
 
-using	std::string, std::cin, std::cout, std::cerr, \
-		std::endl, std::getline, std::stoi;
 
-
-void	add_contact(PhoneBook *phone_book)
+void	add_contact(PhoneBook &phone_book)
 {
-	string	first, last, nick, phone, secret;
+	std::string	first, last, nick, phone, secret;
 
-	cout << "First name:" << endl;
-	getline(cin, first);
-	cout << "Last name:" << endl;
-	getline(cin, last);
-	cout << "Nickname:" << endl;
-	getline(cin, nick);
-	cout << "Phone number:" << endl;
-	getline(cin, phone);
-	cout << "Darkest secret:" << endl;
-	getline(cin, secret);
+	std::cout << "First name:" << std::endl;
+	std::cin >> first;
 
-	if ((*phone_book).add(first, last, nick, phone, secret))
-		cout << "Contact added successfully!" << endl;
-	else
-		cout << "Contact could not be added. Did you leave a field empty?" << endl;
+	std::cout << "Last name:" << std::endl;
+	std::cin >> last;
+
+	std::cout << "Nickname:" << std::endl;
+	std::cin >> nick;
+
+	std::cout << "Phone number:" << std::endl;
+	std::cin >> phone;
+
+	std::cout << "Darkest secret:" << std::endl;
+	std::cin >> secret;
+
+	phone_book.add(first, last, nick, phone, secret);
+	std::cout << "Contact added successfully!" << std::endl;
 }		
 
-void	search_contacts(PhoneBook *phone_book)
+void	search_contacts(PhoneBook &phone_book)
 {
-	(*phone_book).overview();
+	phone_book.overview();
 
-	string	input;
-	int		index;
+	std::string	input;
+	int			index;
 
-	cout << "Please enter the index of the contact you want to view:" << endl;
-	getline(cin, input);
+	std::cout << "Please enter the index of the contact you want to view:" << std::endl;
+	std::cin >> input;
 	try
 	{
-		index = stoi(input);
-		if (!(*phone_book).detail(index))
-		{
-			cerr << "Could not look up that contact. Is the index valid?" << endl;
-		}
+		index = std::stoi(input);
 	}
-	catch (std::invalid_argument & e)
+	catch(const std::exception & e)
 	{
-		cerr << "Could not convert input to an integer." << endl;
+		std::cerr << "Could not convert to valid integer!" << std::endl;
+		return;
 	}
-	catch (std::out_of_range & e)
+
+	try
 	{
-		cerr << "Input is out of valid integer range." << endl;
+		phone_book.detail(index);
+	}
+	catch(const std::invalid_argument & e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 }
 
 int	main()
 {
 	PhoneBook	phone_book;
-	string	command;
+	std::string	command;
 	while (true)
 	{
-		cout << "Please enter a command (ADD, SEARCH or EXIT):" << endl;
-		getline(cin, command);
-		if (cin.eof())
+		std::cout << "Please enter a command (ADD, SEARCH or EXIT):" << std::endl;
+		std::cin >> command;
+		if (std::cin.eof())
 			return 0;
 		if (command == "EXIT")
 			break;
 		else if (command == "ADD")
-			add_contact(&phone_book);
+			add_contact(phone_book);
 		else if (command == "SEARCH")
-			search_contacts(&phone_book);
+			search_contacts(phone_book);
 		else
-			cout << "I don't know how to run that command, sorry.\n" << \
-					"(Valid commands are ADD, SEARCH and EXIT.)"     << endl;
+			std::cout << "I don't know how to run that command, sorry.\n" << \
+						 "(Valid commands are ADD, SEARCH and EXIT.)"     << std::endl;
 	}
 
 	return 0;

@@ -2,39 +2,32 @@
 #include <string>
 #include "PhoneBook.hpp"
 
-using std::string, std::cout, std::endl, std::to_string;
-
 PhoneBook::PhoneBook()
 {
 	index = 0;
 }
 
-bool	PhoneBook::add(string first, string last, string nick, \
-						string phone, string secret)
+void	PhoneBook::add(std::string first, std::string last, \
+					   std::string nick, std::string phone, \
+					   std::string secret)
 {
-	if (!first.length() || !last.length() || !nick.length() || \
-		!phone.length() || !secret.length())
-		return false;
-	
-	Contact	new_contact;
+	try
+	{
+		contacts[index] = Contact(first, last, nick, phone, secret);
 
-	new_contact.first_name 		= first;
-	new_contact.last_name 		= last;
-	new_contact.nickname 		= nick;
-	new_contact.phone_number 	= phone;
-	new_contact.darkest_secret 	= secret;
-	
-	contacts[index] = new_contact;
-
-	index++;
-	if (index >= 8)
-		index = 0;
-	return true;
+		index++;
+		if (index >= 8)
+			index = 0;
+	}
+	catch(const std::invalid_argument & e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 }
 
-static string fit_to_table(string str)
+static std::string fit_to_table(std::string str)
 {
-	string	new_string;
+	std::string	new_string;
 
 	if (str.length() == 10)
 		return str;
@@ -55,27 +48,25 @@ static string fit_to_table(string str)
 
 void	PhoneBook::overview()
 {
-	cout << "-----------------------------------------------------\n" <<
-			"|      Index | First name |  Last name |   Nickname |\n" <<
-			"-----------------------------------------------------" <<endl;
+	std::cout << "-----------------------------------------------------\n" <<
+				 "|      Index | First name |  Last name |   Nickname |\n" <<
+				 "-----------------------------------------------------"   << '\n';
+
 	for (int i = 0; i < 8; i++)
 	{
-		cout << "| " << fit_to_table(to_string(i))           << " | " <<
-						fit_to_table(contacts[i].first_name) << " | " <<
-						fit_to_table(contacts[i].last_name)  << " | " <<
-						fit_to_table(contacts[i].nickname)   << " |"  << endl;
+		std::cout << "| " << fit_to_table(std::to_string(i))          << " | " <<
+							 fit_to_table(contacts[i].getFirstName()) << " | " <<
+							 fit_to_table(contacts[i].getLastName())  << " | " <<
+							 fit_to_table(contacts[i].getNickname())  << " |"  << '\n';
 	}
-	cout << "-----------------------------------------------------" << endl;
+
+	std::cout << "-----------------------------------------------------" << std::endl;
 }
 
-bool	PhoneBook::detail(int index)
+void	PhoneBook::detail(int index)
 {
 	if (index < 0 || index > 7)
-		return false;
-	cout << "First name: " << contacts[index].first_name     << "\n" <<
-			"Last name:  " << contacts[index].last_name      << "\n" <<
-			"Nickname:   " << contacts[index].nickname       << "\n" <<
-			"Phone:      " << contacts[index].phone_number   << "\n" <<
-			"Secret:     " << contacts[index].darkest_secret << endl;
-	return true;
+		throw std::invalid_argument("Index must be between 0 and 7!");
+	
+	contacts[index].print_info();
 }
