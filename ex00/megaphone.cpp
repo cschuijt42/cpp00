@@ -1,10 +1,8 @@
 #include <iostream>
 
-using std::string, std::cout, std::endl, std::toupper;
-
 int main(int ac, char **av)
 {
-	string str;
+	std::string str;
 
 	if (ac > 1)
 	{
@@ -12,13 +10,17 @@ int main(int ac, char **av)
 		{
 			str = av[i];
 			for (size_t i = 0; i < str.length(); i++)
-				cout << (char) toupper(str[i]);
+				std::cout << (char) std::toupper(str[i]);
+			
+			// Put a space in between if we have multiple arguments
+			if (ac > 2 && i < ac - 1)
+				std::cout << " ";
 		}
 	}
 	else
-		cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
 
-	cout << endl;
+	std::cout << std::endl;
 
 	return 0;
 }
