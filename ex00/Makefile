@@ -1,16 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: cschuijt <cschuijt@student.codam.nl>         +#+                      #
-#                                                    +#+                       #
-#    Created: 2023/05/30 22:19:09 by cschuijt      #+#    #+#                  #
-#    Updated: 2023/05/30 22:19:09 by cschuijt      ########   odam.nl          #
-#                                                                              #
-# **************************************************************************** #
-
-
 NAME 			    := megaphone
 UNAME_S				:= $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
@@ -23,11 +10,11 @@ ifeq ($(UNAME_S), Darwin)
 else
 	COMPIL_FLAGS	?= -Wall -Wextra -Werror -std=c++17 -lstdc++
 endif
-INCLUDE_FLAGS		?= 
+INCLUDE_FLAGS		?=
 
 SOURCEFILES	:=	megaphone.cpp
 
-HEADER	:=	
+HEADER	:=
 
 OFILES	:=	$(SOURCEFILES:.cpp=.o)
 # SRC_DIR	:=	src
